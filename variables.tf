@@ -8,3 +8,8 @@ variable "tailscale_api_key" {
   sensitive = true
   default   = null
 }
+
+variable "host_name" {
+  type        = string
+  description = "machine hostname"
+}
