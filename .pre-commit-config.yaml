@@ -1,0 +1,43 @@
+repos:
+  # 1. Hooks estándar de pre-commit
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  # 2. Prettier para archivos de soporte (YAML, JSON, Markdown)
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        types_or: [yaml, json, markdown]
+
+  # 3. Hooks locales para OpenTofu
+  - repo: local
+    hooks:
+      # Formatear el código (tofu fmt)
+      - id: tofu-fmt
+        name: tofu fmt
+        entry: tofu fmt -recursive
+        language: system
+        files: \.tf$|\.tfvars$
+        pass_filenames: false
+
+      # Validar la sintaxis (tofu validate)
+      - id: tofu-validate
+        name: tofu validate
+        entry: tofu validate
+        language: system
+        files: \.tf$|\.tfvars$
+        pass_filenames: false
+
+      # Ejecutar tests de OpenTofu (tofu test - requiere OpenTofu 1.6+)
+      - id: tofu-test
+        name: tofu test
+        entry: tofu test
+        language: system
+        files: \.tf$|\.tfvars$|\.tftest\.hcl$
+        pass_filenames: false
