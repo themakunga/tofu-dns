@@ -1,4 +1,6 @@
- # Tofu DNS
+# Tofu DNS
+
+![DNS](https://img.shields.io/badge/DNS-00599C?style=flat-square)
 
 ![OpenTofu](https://img.shields.io/badge/OpenTofu-FFDA18?style=for-the-badge&logo=opentofu&logoColor=black)
 ![Latest Release](https://img.shields.io/github/v/release/themakunga/tofu-dns?style=for-the-badge&color=success)
@@ -36,6 +38,7 @@ Before working with this repository, ensure you have the following installed and
 - Valid API tokens for your DNS provider(s) exported securely as environment variables (e.g., `CLOUDFLARE_API_TOKEN`).
 
 **Installation on Debian/Ubuntu:**
+
 ```bash
 # It is recommended to follow the official OpenTofu repository installation script
 curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
@@ -44,11 +47,13 @@ chmod +x install-opentofu.sh
 ```
 
 **Installation on macOS (via Homebrew):**
+
 ```bash
 brew install opentofu
 ```
 
 **Installation on Arch Linux:**
+
 ```bash
 sudo pacman -S opentofu
 ```
@@ -59,18 +64,21 @@ To apply or test changes to the DNS infrastructure locally:
 
 **1. Initialize OpenTofu:**
 Downloads the necessary provider plugins and sets up the backend state.
+
 ```bash
 tofu init
 ```
 
 **2. Preview the changes:**
 Generates an execution plan to show exactly what records will be created, modified, or deleted.
+
 ```bash
 tofu plan
 ```
 
 **3. Apply the configuration:**
 Executes the planned changes to the DNS provider.
+
 ```bash
 tofu apply
 ```
@@ -99,6 +107,7 @@ Antes de trabajar con este repositorio, asegúrate de tener lo siguiente instala
 - Tokens de API válidos para los proveedores DNS exportados de manera segura como variables de entorno (ej. `CLOUDFLARE_API_TOKEN`).
 
 **Instalación en Debian/Ubuntu:**
+
 ```bash
 # Se recomienda seguir el script oficial de instalación de OpenTofu
 curl --proto '=https' --tlsv1.2 -fsSL https://get.opentofu.org/install-opentofu.sh -o install-opentofu.sh
@@ -107,11 +116,13 @@ chmod +x install-opentofu.sh
 ```
 
 **Instalación en macOS (vía Homebrew):**
+
 ```bash
 brew install opentofu
 ```
 
 **Instalación en Arch Linux:**
+
 ```bash
 sudo pacman -S opentofu
 ```
@@ -122,18 +133,21 @@ Para aplicar o probar cambios en la infraestructura DNS de forma local:
 
 **1. Inicializar OpenTofu:**
 Descarga los plugins necesarios de los proveedores y configura el estado (backend).
+
 ```bash
 tofu init
 ```
 
 **2. Previsualizar los cambios:**
 Genera un plan de ejecución para mostrar exactamente qué registros se crearán, modificarán o eliminarán.
+
 ```bash
 tofu plan
 ```
 
 **3. Aplicar la configuración:**
 Ejecuta los cambios planificados en el proveedor DNS.
+
 ```bash
 tofu apply
 ```
@@ -145,3 +159,15 @@ Este repositorio impone una arquitectura estricta y automatizada mediante Rulese
 1. **Rama `develop`:** La rama de integración. Todos los nuevos registros DNS y modificaciones van aquí primero. Los pipelines de CI generalmente ejecutan `tofu validate`, `tofu fmt` y un `tofu plan` especulativo.
 2. **Tren de Lanzamiento:** Al ejecutar el workflow **Start Release** desde GitHub Actions, se crea una rama `release/v*` y se abre un Pull Request hacia `main`.
 3. **Rama `main`:** Rama de producción protegida. Al fusionar (merge) el PR se aplican los cambios de infraestructura (si está automatizado vía GitOps) y se dispara el pipeline de **Semantic Release**, el cual etiqueta el estado actual de la configuración, genera el `CHANGELOG.md` y crea el Release oficial en GitHub.
+
+## Repository reference
+
+| Path                           | Purpose                     |
+| ------------------------------ | --------------------------- |
+| [`main.tf`](main.tf)           | Infrastructure declarations |
+| [`providers.tf`](providers.tf) | Project configuration       |
+| [`variables.tf`](variables.tf) | Input declarations          |
+| [`output.tf`](output.tf)       | Project configuration       |
+
+The default branch is `main`. Use the tracked manifests and scripts above
+when preparing changes; keep local credentials and generated files out of commits.
